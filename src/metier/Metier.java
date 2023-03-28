@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import metier.piece.Cavalier;
+import metier.piece.Fou;
 import metier.piece.Piece;
 import metier.piece.Pion;
+import metier.piece.Reine;
+import metier.piece.Roi;
 import metier.piece.Tour;
 
 public class Metier 
@@ -29,7 +32,7 @@ public class Metier
 	{
 		try
 		{
-			Scanner sc = new Scanner(new FileReader("niveau" + this.niveau + ".txt"));
+			Scanner sc = new Scanner(new FileReader("./donnees/niveaux/niveau" + this.niveau + ".txt"));
 			
 			this.difficulte = sc.nextLine();
 
@@ -37,26 +40,32 @@ public class Metier
 			while(sc.hasNextLine())
 			{
 				sc.nextLine();
-				String   line           = sc.nextLine();
-				String[] positionnement = line.split("|");
-				
-				for (int cptC = 1; cptC < positionnement.length; cptC++) 
+				if(sc.hasNextLine())
 				{
-					Piece piece = null;
-					switch (positionnement[cptC].charAt(1)) 
+					String   line           = sc.nextLine();
+					String[] positionnement = line.split("|");
+					
+					for (int cptC = 2; cptC < positionnement.length; cptC+=4) 
 					{
-						case 'P' -> piece = new Pion    (cptL, cptC);
-						case 'C' -> piece = new Cavalier(cptL, cptC);
-						case 'T' -> piece = new Tour    (cptL, cptC);
-						case 'Q' -> piece = new Reine   (cptL, cptC);
-						case 'K' -> piece = new Roi     (cptL, cptC);
-						case 'F' -> piece = new Fou     (cptL, cptC, this);
-					}
+						Piece piece = null;	
 
-					if(piece != null)
-						this.lstPiece.add(piece);
+						System.out.println(positionnement[cptC] + " " +cptC);
+						
+						switch (positionnement[cptC].charAt(0)) 
+						{
+							case 'P' -> piece = new Pion    (cptL, cptC);
+							case 'C' -> piece = new Cavalier(cptL, cptC);
+							case 'T' -> piece = new Tour    (cptL, cptC);
+							case 'Q' -> piece = new Reine   (cptL, cptC);
+							case 'K' -> piece = new Roi     (cptL, cptC);
+							case 'F' -> piece = new Fou     (cptL, cptC, this);
+						}
+	
+						if(piece != null)
+							this.lstPiece.add(piece);
+					}
+					cptL++;
 				}
-				cptL++;
 			}
 
 			this.taillePlateau = cptL;
@@ -77,4 +86,15 @@ public class Metier
 	}
 
 	public int getTaillePlateau() {return this.taillePlateau;}
+
+	@Override
+	public String toString() 
+	{
+		String sRet = "";
+		for (Piece piece : lstPiece)
+			sRet += piece + "\n";
+
+		return sRet;
+	}
 }
+
