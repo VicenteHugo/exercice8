@@ -15,6 +15,8 @@ public class Metier
 	private int         niveau;
 	private String      difficulte;
 	private List<Piece> lstPiece;
+	private int         taillePlateau;
+	
 	public Metier()
 	{
 		this.niveau   = 1;
@@ -48,14 +50,16 @@ public class Metier
 						case 'T' -> piece = new Tour    (cptL, cptC);
 						case 'Q' -> piece = new Reine   (cptL, cptC);
 						case 'K' -> piece = new Roi     (cptL, cptC);
-						case 'F' -> piece = new Fou     (cptL, cptC);
+						case 'F' -> piece = new Fou     (cptL, cptC, this);
 					}
-					
+
 					if(piece != null)
 						this.lstPiece.add(piece);
 				}
 				cptL++;
 			}
+
+			this.taillePlateau = cptL;
 		}
 		catch(Exception e){e.printStackTrace();}
 	}
@@ -71,4 +75,6 @@ public class Metier
 		this.niveau = this.niveau > 0 ? this.niveau--:this.niveau;
 		this.chagerNiveau();
 	}
+
+	public int getTaillePlateau() {return this.taillePlateau;}
 }
