@@ -8,4 +8,5 @@ compile.list
 run.bat
 
 #donnees
-./bin/
+./bin/donnees/*.gif
+./bin/donnees/*.txt
