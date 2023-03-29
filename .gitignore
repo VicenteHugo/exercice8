@@ -6,3 +6,6 @@ compile.list
 
 #runner
 run.bat
+
+#bin
+./bin/
