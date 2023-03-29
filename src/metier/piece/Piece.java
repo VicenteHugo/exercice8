@@ -1,5 +1,7 @@
 package metier.piece;
 
+import java.util.List;
+
 public abstract class Piece
 {
 	private int col;
@@ -19,6 +21,15 @@ public abstract class Piece
 			this.lig = lig;
 			this.col = col;
 		}
+	}
+
+	public Piece estConfondu(List<Piece> lstPiece)
+	{
+		for (Piece piece : lstPiece)
+			if(piece.lig == this.lig && piece.col == this.col)
+				return piece;
+
+		return null;
 	}
 
 	public int getCol() {return this.col;}

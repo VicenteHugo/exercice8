@@ -33,7 +33,9 @@ public class Metier
 		try
 		{
 			Scanner sc = new Scanner(new FileReader("./donnees/niveaux/niveau" + this.niveau + ".txt"));
-			
+		
+			this.lstPiece.clear();
+
 			this.difficulte = sc.nextLine();
 
 			int cptL = 0;
@@ -96,7 +98,13 @@ public class Metier
 
 		if(piece.peutDeplacer(lig, col))
 			piece.deplacer(lig, col);
+
+		Piece autrePiece;
+
+		if((autrePiece = piece.estConfondu(lstPiece)) != null)
+			this.lstPiece.remove(autrePiece);
 	}
 
+	public String getDificulte(){return this.difficulte;}
 }
 
