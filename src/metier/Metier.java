@@ -56,7 +56,7 @@ public class Metier
 							case 'P' -> piece = new Pion    (cptL, cptC);
 							case 'C' -> piece = new Cavalier(cptL, cptC);
 							case 'T' -> piece = new Tour    (cptL, cptC);
-							case 'Q' -> piece = new Reine   (cptL, cptC);
+							case 'Q' -> piece = new Reine   (cptL, cptC, this);
 							case 'K' -> piece = new Roi     (cptL, cptC);
 							case 'F' -> piece = new Fou     (cptL, cptC, this);
 						}
@@ -87,14 +87,16 @@ public class Metier
 
 	public int getTaillePlateau() {return this.taillePlateau;}
 
-	@Override
-	public String toString() 
-	{
-		String sRet = "";
-		for (Piece piece : lstPiece)
-			sRet += piece + "\n";
 
-		return sRet;
+	public void deplacer(Piece piece, int lig, int col)
+	{
+		if(lig >= taillePlateau || col >= taillePlateau ||
+		   lig <  0             || col <  0               )
+			return;
+
+		if(piece.peutDeplacer(lig, col))
+			piece.deplacer(lig, col);
 	}
+
 }
 

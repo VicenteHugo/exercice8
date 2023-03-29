@@ -1,10 +1,16 @@
 package metier.piece;
 
+import metier.Metier;
+
 public class Reine extends Piece
 {
-	public Reine(int lig, int col)
+	private Metier metier;
+
+	public Reine(int lig, int col, Metier metier)
 	{
 		super(lig, col);
+
+		this.metier = metier;
 	}
 
 	public boolean peutDeplacer(int lig, int col)
@@ -14,16 +20,15 @@ public class Reine extends Piece
 		if(this.getCol() == col && this.getLig() != lig)
 			return true;
 
+		for (int cpt = 0; cpt < this.metier.getTaillePlateau(); cpt++)
+		{
+			if(this.getLig() - cpt == lig && this.getCol() - cpt == col ||
+		       this.getLig() + cpt == lig && this.getCol() - cpt == col ||
+			   this.getLig() - cpt == lig && this.getCol() + cpt == col ||
+			   this.getLig() + cpt == lig && this.getCol() + cpt == col   )
+			return true;
+		}
 		return false;
-
-		// return this.getLig() - 1 == lig && this.getCol() - 1 == col ||
-		//        this.getLig() - 2 == lig && this.getCol() - 1 == col ||
-		//        this.getLig() + 1 == lig && this.getCol() - 2 == col ||
-		//        this.getLig() + 2 == lig && this.getCol() - 2 == col ||
-		//        this.getLig() - 1 == lig && this.getCol() + 1 == col ||
-		//        this.getLig() - 2 == lig && this.getCol() + 1 == col ||
-		//        this.getLig() + 1 == lig && this.getCol() + 2 == col ||
-		//        this.getLig() + 2 == lig && this.getCol() + 2 == col;
 	}
 
 	public char getSymbole(){return 'Q';}

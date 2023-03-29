@@ -9,6 +9,7 @@ public class Fou extends Piece
 	public Fou(int lig, int col, Metier metier)
 	{
 		super(lig, col);
+
 		this.metier = metier;
 	}
 
@@ -17,9 +18,9 @@ public class Fou extends Piece
 		for (int cpt = 0; cpt < this.metier.getTaillePlateau(); cpt++)
 		{
 			if(this.getLig() - cpt == lig && this.getCol() - cpt == col ||
-			   this.getLig() + cpt == lig && this.getCol() - cpt == col ||
+		       this.getLig() + cpt == lig && this.getCol() - cpt == col ||
 			   this.getLig() - cpt == lig && this.getCol() + cpt == col ||
-			   this.getLig() + cpt == lig && this.getCol() + cpt == col)
+			   this.getLig() + cpt == lig && this.getCol() + cpt == col   )
 				return true;
 		}
 
