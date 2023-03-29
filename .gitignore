@@ -7,5 +7,6 @@ compile.list
 #runner
 run.bat
 
-#bin
-./bin/
+#donnees
+*.gif
+*.txt
