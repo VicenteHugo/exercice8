@@ -1,8 +1,8 @@
 package metier;
 
-import java.util.List;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import metier.piece.Cavalier;
@@ -50,8 +50,6 @@ public class Metier
 					for (int cptC = 2; cptC < positionnement.length; cptC+=4) 
 					{
 						Piece piece = null;	
-
-						System.out.println(positionnement[cptC] + " " +cptC);
 						
 						switch (positionnement[cptC].charAt(0)) 
 						{
@@ -105,6 +103,20 @@ public class Metier
 			this.lstPiece.remove(autrePiece);
 	}
 
-	public String getDificulte(){return this.difficulte;}
+	public String getDifficulte(){return this.difficulte;}
+
+	public String getCoulDifficulte()
+	{
+		if(this.difficulte.equals("Débutant"))
+			return "plateauvert";
+
+		if(this.difficulte.equals("Intermédiaire"))
+			return "plateaubleu";
+
+		if(this.difficulte.equals("Avancé"))
+			return "plateauviolet";
+
+		return "plateaurouge";
+	}
 }
 
