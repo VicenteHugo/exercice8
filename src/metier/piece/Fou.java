@@ -1,31 +1,41 @@
 package metier.piece;
 
-import metier.Metier;
-
 public class Fou extends Piece
 {
-	private Metier metier;
-
-	public Fou(int lig, int col, Metier metier)
+	/**
+	 * Constructeur du Fou
+	 * @param lig,    ligne   du Fou.
+	 * @param col,    colonne du Fou.
+	 * @param metier, permet d'obtenir la liste de pièce.
+	 */
+	public Fou(int lig, int col)
 	{
 		super(lig, col);
-
-		this.metier = metier;
 	}
 
-	public boolean peutDeplacer(int lig, int col)
+	public Fou(Piece p)
 	{
-		for (int cpt = 0; cpt < this.metier.getTaillePlateau(); cpt++)
-		{
-			if(this.getLig() - cpt == lig && this.getCol() - cpt == col ||
-		       this.getLig() + cpt == lig && this.getCol() - cpt == col ||
-			   this.getLig() - cpt == lig && this.getCol() + cpt == col ||
-			   this.getLig() + cpt == lig && this.getCol() + cpt == col   )
-				return true;
-		}
-
-		return false;
+		super(p);
 	}
 
-	public String getSymbole(){return "fou";}
+	/**
+	 * Permet de determiner si le deplacement demander est réalisable pour un Fou
+	 * @param  lig, ligne   de destination.
+	 * @param  col, colonne de destination.
+	 * @return true si le deplacement est celui d'un Fou (Diagonale) et false dans tout autre cas.
+	 */
+	public boolean peutDeplacer(int ligDest, int colDest)
+	{
+
+		return  (Math.abs(this.getLig() - ligDest) == Math.abs(this.getCol() - colDest) &&
+		        !this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest)        || 
+			    (this.getLig() + 1 == ligDest && this.getCol() + 1 == colDest ||
+			     this.getLig() - 1 == ligDest && this.getCol() - 1 == colDest ||
+				 this.getLig() - 1 == ligDest && this.getCol() + 1 == colDest ||
+				 this.getLig() + 1 == ligDest && this.getCol() - 1 == colDest))
+				&&
+				 this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null;
+	}
+
+	public char getSymbole(){return 'F';}
 }

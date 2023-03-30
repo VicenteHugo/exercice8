@@ -2,23 +2,38 @@ package metier.piece;
 
 public class Roi extends Piece
 {
+	/**
+	 * Constructeur du FoRoiu
+	 * @param lig, ligne   du Roi.
+	 * @param col, colonne du Roi.
+	 */
 	public Roi(int lig, int col)
 	{
 		super(lig, col);
 	}
 
-	public boolean peutDeplacer(int lig, int col)
+	public Roi(Piece p)
 	{
-		if(this.getLig() == lig && this.getCol() == col - 1 || this.getCol() == col + 1 )
-			return true;
-		if(this.getCol() == col && this.getLig() == lig - 1 || this.getLig() == lig + 1)
-			return true;
-
-		return this.getLig() - 1 == lig && this.getCol() - 1 == col ||
-		       this.getLig() - 1 == lig && this.getCol() + 1 == col ||
-		       this.getLig() + 1 == lig && this.getCol() - 1 == col ||
-		       this.getLig() + 1 == lig && this.getCol() + 1 == col;
+		super(p);
 	}
 
-	public String getSymbole(){return "roi";}
+	/**
+	 * Permet de determiner si le deplacement demander est réalisable pour un Roi
+	 * @param  lig, ligne   de destination.
+	 * @param  col, colonne de destination.
+	 * @return true si le deplacement est celui d'un Roi (1 case dans toutes les directions) et false dans tout autre cas.
+	 */
+	public boolean peutDeplacer(int ligDest, int colDest)
+	{
+		return ((this.getLig() == ligDest && this.getCol() == colDest - 1 || this.getCol() == colDest + 1) ||
+		        (this.getCol() == colDest && this.getLig() == ligDest - 1 || this.getLig() == ligDest + 1)  ||
+			    (this.getLig() - 1 == ligDest && this.getCol() - 1 == colDest ||
+		         this.getLig() - 1 == ligDest && this.getCol() + 1 == colDest ||
+		         this.getLig() + 1 == ligDest && this.getCol() - 1 == colDest ||
+		         this.getLig() + 1 == ligDest && this.getCol() + 1 == colDest ))
+				&&
+				 this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null;
+	}
+
+	public char getSymbole(){return 'K';}
 }

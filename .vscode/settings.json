@@ -1,0 +1,6 @@
+{
+	"java.project.referencedLibraries": [
+		"lib/**/*.jar",
+		"c:\\paquetage_class\\ihmgui.jar"
+	]
+}
