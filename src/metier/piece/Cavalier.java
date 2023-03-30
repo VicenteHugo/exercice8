@@ -20,5 +20,5 @@ public class Cavalier extends Piece
 	}
 
 	@Override
-	public char getSymbole() {return 'C';}
+	public String getSymbole() {return "cavalier";}
 }

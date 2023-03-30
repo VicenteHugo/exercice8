@@ -31,5 +31,5 @@ public class Reine extends Piece
 		return false;
 	}
 
-	public char getSymbole(){return 'Q';}
+	public String getSymbole(){return "reine";}
 }

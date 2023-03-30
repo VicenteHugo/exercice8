@@ -27,5 +27,5 @@ public class Fou extends Piece
 		return false;
 	}
 
-	public char getSymbole(){return 'F';}
+	public String getSymbole(){return "fou";}
 }

@@ -47,5 +47,5 @@ public abstract class Piece
 	 * Permet de connaître le symbole de la pièce.
 	 * @return le charactère symbolisant la pièce.
 	 */
-	public abstract char    getSymbole();
+	public abstract String getSymbole();
 }

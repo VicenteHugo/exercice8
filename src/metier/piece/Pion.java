@@ -21,6 +21,6 @@ public class Pion extends Piece
 	}
 
 	@Override
-	public char getSymbole() {return 'P';}
+	public String getSymbole() {return "pion";}
 		
 }

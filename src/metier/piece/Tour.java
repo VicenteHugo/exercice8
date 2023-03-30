@@ -19,6 +19,6 @@ public class Tour extends Piece
 	}
 
 	@Override
-	public char getSymbole() {return 'T';}
+	public String getSymbole() {return "tour";}
 	
 }

@@ -20,5 +20,5 @@ public class Roi extends Piece
 		       this.getLig() + 1 == lig && this.getCol() + 1 == col;
 	}
 
-	public char getSymbole(){return 'K';}
+	public String getSymbole(){return "roi";}
 }
