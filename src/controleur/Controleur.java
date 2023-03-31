@@ -79,6 +79,15 @@ public class Controleur extends Controle
 		return lib;
 	}
 
+	@Override
+	public String setLabel(int arg0) 
+	{
+		String lbl = null;
+		if(arg0 == 0) lbl = "Niveau ";
+
+		return lbl;
+	}
+
 	public String setImage ( int ligne, int colonne, int couche)
 	{
 		char   symbole;
@@ -128,6 +137,12 @@ public class Controleur extends Controle
 
 		this.frame.majIHM();
 	}
+
+	public String setTextLabel(int arg)
+	{
+		return this.metier.getNiveau() + "/60";
+	}
+
 	
 
 	public static void main(String[] args) 

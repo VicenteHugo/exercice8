@@ -26,7 +26,7 @@ public class Metier
 	public Metier()
 	{
 		this.niveau   = 1;
-		this.lstPiece = new ArrayList<Piece>();
+		this.lstPiece = new ArrayList<Piece>(16);
 		this.lstEtat  = new ArrayList<List<Piece>>();
 		this.cptEtat  = -1;
 
@@ -76,8 +76,7 @@ public class Metier
 					cptL++;
 				}
 			}
-			this.lstEtat.add(this.copy(this.lstPiece));
-			this.cptEtat++;
+			this.lstEtat.add(++this.cptEtat, this.copy(this.lstPiece));
 			
 			this.taillePlateau = cptL;
 		}
@@ -95,6 +94,8 @@ public class Metier
 
 		return null;
 	}
+
+	public int getNiveau() {return this.niveau;}
 
 	public void niveauSuivant()
 	{
@@ -127,7 +128,7 @@ public class Metier
 		if(cptEtat > 0)
 			cptEtat--;
 
-		lstPiece = lstEtat.get(cptEtat);
+		lstPiece = this.copy(lstEtat.get(cptEtat));
 	}
 
 	public void redo()
@@ -135,7 +136,7 @@ public class Metier
 		if(cptEtat < lstEtat.size() - 1)
 			cptEtat++;
 
-		lstPiece = lstEtat.get(cptEtat);
+		lstPiece = this.copy(lstEtat.get(cptEtat));
 	}
 
 
@@ -160,8 +161,12 @@ public class Metier
 		if((autrePiece = piece.estConfondu(lstPiece)) != null)
 			this.lstPiece.remove(autrePiece);
 
-		this.lstEtat.add(this.copy(this.lstPiece));
 		this.cptEtat++;
+
+		try{this.lstEtat.remove(this.cptEtat);}catch(Exception e){}
+
+		this.lstEtat.add(this.cptEtat, this.copy(this.lstPiece));
+		
 
 		if(this.lstPiece.size() == 1)
 			this.niveauSuivant();
