@@ -3,6 +3,7 @@
 
 #jar file
 *.jar
+*.MF
 
 #Compile list
 compile.list
