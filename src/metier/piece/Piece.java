@@ -13,8 +13,8 @@ public abstract class Piece
 
 	/**
 	 * Constructeur de Piece
-	 * @param lig, ligne   de la piece.
-	 * @param col, colonne de la piece.
+	 * @param lig ligne   de la piece.
+	 * @param col colonne de la piece.
 	 */
 	public Piece(int lig, int col)
 	{		
@@ -22,6 +22,11 @@ public abstract class Piece
 		this.col    = col ;
 	}
 
+	/**
+	 * Constructeur d'une Piece utilisant le constructeur de Piece
+	 * Celui-ci permet la copie d'une pièce passer en paramètre
+	 * @param p Piece à copier.
+	 */
 	public Piece(Piece p)
 	{
 		this.lig = p.lig;
@@ -29,21 +34,21 @@ public abstract class Piece
 	}
 	/**
 	 * Méthode pour déplacer une piece
-	 * @param lig, ligne   de destination.
-	 * @param col, colonne de destination.
+	 * @param ligDest ligne   de destination.
+	 * @param colDest colonne de destination.
 	 */
-	public void deplacer(int lig, int col)
+	public void deplacer(int ligDest, int colDest)
 	{
-		if (this.peutDeplacer(lig, col))
+		if (this.peutDeplacer(ligDest, colDest))
 		{
-			this.lig = lig ;
-			this.col = col ;
+			this.lig = ligDest ;
+			this.col = colDest ;
 		}
 	}
 
 	/**
 	 * Méthode pour déterminer si une piece est deja à la place de notre piece
-	 * @param lstPiece, liste des pieces existantes.
+	 * @param lstPiece liste des pieces existantes.
 	 * @return la piece avec laquelle nous sommes confondus.
 	 */
 	public Piece estConfondu(List<Piece> lstPiece)
@@ -51,10 +56,17 @@ public abstract class Piece
 		return mange(this.lig, this.col, lstPiece);
 	}
 
-	public Piece mange(int lig, int col, List<Piece> lstPiece)
+	/**
+	 * Retourne la piece manger a la ligne et colonne passé en paramètre dans la liste de picèces
+	 * @param ligDest  la ligne de destination
+	 * @param colDest  la colonne de destination
+	 * @param lstPiece la liste de pièce du plateau en cours
+	 * @return la piece manger, ou null si aucune piece n'est langé
+	 */
+	public Piece mange(int ligDest, int colDest, List<Piece> lstPiece)
 	{
 		for (Piece piece : lstPiece)
-			if(piece.lig == lig && piece.col == col && piece != this)
+			if(piece.lig == ligDest && piece.col == colDest && piece != this)
 				return piece;
 
 		return null;
@@ -103,12 +115,6 @@ public abstract class Piece
 	 * @return un int qui représente la ligne actuel de la pièce
 	 */
 	public int getLig() { return this.lig ;}
-
-	@Override
-	public String toString() {
-		return "" + this.getSymbole();
-	}
-
 
 	public static void setMetier(Metier metier)
 	{

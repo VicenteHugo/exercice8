@@ -4,6 +4,8 @@ import java.io.FileReader  ;
 import java.nio.charset.Charset;
 import java.util.ArrayList ;
 import java.util.List      ;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner   ;
 
 import metier.piece.Cavalier ;
@@ -16,13 +18,56 @@ import metier.piece.Tour     ;
 
 public class Metier 
 {
+	/**
+	 * HashMap qui associe la difficulté à la couleur du tableau
+	 */
+	private static Map<Character, String> dicDifficuclte = new HashMap<Character, String>();
+
+	
+	/**
+	 * Le niveau en cours
+	 */
 	private int               niveau        ;
-	private String            difficulte    ;
+
+	/**
+	 * Le niveau de difficulté en cours
+	 */
+	private char              difficulte    ;
+
+	/**
+	 * La liste de pièce du plateau actuel
+	 */
 	private List<Piece>       lstPiece      ;
+
+	/**
+	 * Taille du plateau actuel
+	 */
 	private int               taillePlateau ;
+	
+	/**
+	 * Liste de tout les etat de plateau du niveau actuel
+	 */
 	private List<List<Piece>> lstEtat       ;
+
+	/**
+	 * indice de l'etat actuel
+	 */
 	private int               cptEtat       ;
 	
+	static
+	{
+		Metier.dicDifficuclte.put('D', "plateauvert");
+		Metier.dicDifficuclte.put('I', "plateaubleu");
+		Metier.dicDifficuclte.put('A', "plateauviolet");
+		Metier.dicDifficuclte.put('E', "plateaurouge");
+	}
+
+
+
+
+	/**
+	 * Constructeur de Metier
+	 */
 	public Metier()
 	{
 		this.niveau   = 1;
@@ -32,10 +77,13 @@ public class Metier
 
 		Piece.setMetier(this);
 
-		this.chagerNiveau();
+		this.chargerNiveau();
 	}
 
-	public void chagerNiveau()
+	/**
+	 * Charge le niveau, en fonction de l'attribut niveau, génère le niveau par rapport au fichier txt
+	 */
+	public void chargerNiveau()
 	{
 		try
 		{
@@ -45,12 +93,13 @@ public class Metier
 			this.lstEtat.clear();
 			this.cptEtat = -1;
 
-			this.difficulte = sc.nextLine();
+			this.difficulte = sc.nextLine().charAt(0);
 
 			int cptL = 0;
 			while(sc.hasNextLine())
 			{
 				sc.nextLine();
+				
 				if(sc.hasNextLine())
 				{
 					String   line           = sc.nextLine();
@@ -83,9 +132,15 @@ public class Metier
 		catch(Exception e){e.printStackTrace();}
 	}
 
+	/**
+	 * Retourne la pièce à la ligne et colonne passé en paramètre
+	 * @param lig la ligne   voulu
+	 * @param col la colonne voulu
+	 * @return la Piece à la ligne et colonne, ou null si il n'y a pas de Piece
+	 */
 	public Piece getPiece(int lig, int col)
 	{
-		if(lig * taillePlateau + col >= taillePlateau * taillePlateau)
+		if(lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau)
 			return null;
 	
 		for (Piece piece : lstPiece)
@@ -95,34 +150,41 @@ public class Metier
 		return null;
 	}
 
+	/**
+	 * Retourne le niveau actuel
+	 * @return le niveau actuel
+	 */
 	public int getNiveau() {return this.niveau;}
 
+	/**
+	 * Passe au niveau suivant
+	 */
 	public void niveauSuivant()
 	{
 		this.niveau = this.niveau < 60 ? this.niveau+1:this.niveau;
-		this.chagerNiveau();
+		this.chargerNiveau();
 	}
 
+	/**
+	 * Passe au niveau precedent
+	 */
 	public void niveauPrecedent()
 	{
 		this.niveau = this.niveau > 1 ? this.niveau-1:this.niveau;
-		this.chagerNiveau();
+		this.chargerNiveau();
 	}
 
+	/**
+	 * Permet de réinitialiser le niveau actuel
+	 */
 	public void reset()
 	{
-		if(this.niveau < 60 )
-		{
-			this.niveauSuivant();
-			this.niveauPrecedent();
-		}
-		else
-		{
-			this.niveauPrecedent();
-			this.niveauSuivant();
-		}
+		this.chargerNiveau();
 	}
 
+	/**
+	 * Vas permettre de revenir une étape en arrière jusqu'a l'état initial
+	 */
 	public void undo()
 	{
 		if(cptEtat > 0)
@@ -131,6 +193,9 @@ public class Metier
 		lstPiece = this.copy(lstEtat.get(cptEtat));
 	}
 
+	/**
+	 * Vas permettre d'aller une étape en avant jusqu'a la dernière effectuer
+	 */
 	public void redo()
 	{
 		if(cptEtat < lstEtat.size() - 1)
@@ -139,22 +204,30 @@ public class Metier
 		lstPiece = this.copy(lstEtat.get(cptEtat));
 	}
 
-
+	/**
+	 * Méthode qui vas retourné la taille du tableau
+	 * @return int qui représente la taille de tableaux (int x int)
+	 */
 	public int getTaillePlateau() {return this.taillePlateau;}
 
-
-	public void deplacer(Piece piece, int lig, int col)
+	/**
+	 * Méthode qui deplace une Piece vers des coordonnés
+	 * @param piece Piece à deplacer
+	 * @param ligDest ligne  de le destination
+	 * @param colDest colone de le destination
+	 */
+	public void deplacer(Piece piece, int ligDest, int colDest)
 	{
 		if(piece == null)
 			return;
 
 
-		if(lig >= taillePlateau || col >= taillePlateau ||
-		   lig <  0             || col <  0               )
+		if(ligDest >= this.taillePlateau || colDest >= this.taillePlateau ||
+		   ligDest <  0             || colDest <  0               )
 			return;
 
-		if(piece.peutDeplacer(lig, col))
-			piece.deplacer(lig, col);
+		if(piece.peutDeplacer(ligDest, colDest))
+			piece.deplacer(ligDest, colDest);
 
 		Piece autrePiece;
 
@@ -172,34 +245,42 @@ public class Metier
 			this.niveauSuivant();
 	}
 
-	public boolean coordValide(int lig, int col)
+	/**
+	 * Méthode qui retourne true si les coordonnés sont valide, false elles ne le sont pas
+	 * @param lig ligne   des coordonnés a verifier
+	 * @param col colonne des coordonnés a verifier
+	 * @return true si les coordonnés sont valide, false elles ne le sont pas
+	 */
+	public boolean coordValide(int ligDest, int colDest)
 	{
-		return !(lig >= taillePlateau || col >= taillePlateau ||
-                 lig <  0             || col <  0               );            
+		return !( ligDest >= this.taillePlateau || colDest >= this.taillePlateau ||
+                  ligDest <  0                  || colDest <  0                     );            
 	}
 
-
-	public String getDifficulte(){return this.difficulte;}
-
+	/**
+	 * Méthode qui retourne la couleur de la difficulté actuelle
+	 * @return retourne un String étant la couleur de la difficulté actuelle
+	 */
 	public String getCoulDifficulte()
 	{
-		if(this.difficulte.equals("Débutant"     ))
-			return "plateauvert"  ;
-
-		if(this.difficulte.equals("Intermédiaire"))
-			return "plateaubleu"  ;
-
-		if(this.difficulte.equals("Avancé"       ))
-			return "plateauviolet";
-
-		return     "plateaurouge" ;
+		return Metier.dicDifficuclte.get(this.difficulte);
 	}
 
+	/**
+	 * Methode pour obtenir la List tout les pieces du plateau
+	 * @return List de pieces
+	 */
 	public List<Piece> getLstPiece() {return this.lstPiece;}
 
+	/**
+	 * Methode retournant le char symbole de la piece aux coordonnées donnés
+	 * @param lig ligne   de la Piece dont le symbole est retourné
+	 * @param col colonne de la Piece dont le symbole est retourné
+	 * @return char étant le symbole de la Piece
+	 */
 	public char getSymbole(int lig, int col)
 	{
-		if(lig * taillePlateau + col >= taillePlateau * taillePlateau)
+		if(lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau)
 			return ' ';
 		
 		for (Piece piece : lstPiece)
@@ -209,6 +290,11 @@ public class Metier
 		return ' ';
 	}
 
+	/**
+	 * Méthode qui copie la List de piece en copiant chaque piece
+	 * @param lstPiece List de piece à copier
+	 * @return la copie de lstPiece avec des copies des pieces
+	 */
 	public List<Piece> copy(List<Piece> lstPiece)
 	{
 		List<Piece> lstRet = new ArrayList<Piece>();
