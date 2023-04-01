@@ -34,7 +34,8 @@ public class Fou extends Piece
 				 this.getLig() - 1 == ligDest && this.getCol() + 1 == colDest ||
 				 this.getLig() + 1 == ligDest && this.getCol() - 1 == colDest))
 				&&
-				 this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null;
+				(this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null && 
+				!this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest));
 	}
 
 	public char getSymbole(){return 'F';}

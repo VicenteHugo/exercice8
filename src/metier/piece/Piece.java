@@ -115,6 +115,7 @@ public abstract class Piece
 		Piece.metier = metier;
 	}
 
+
 	/**
 	 * Permet de vérifier si une pièce peut se déplacer à la position de lig et col.
 	 * @param lig, ligne sur la quelle on veut déplacer la pièce.
