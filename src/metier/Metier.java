@@ -1,11 +1,12 @@
 package metier;
 
-import java.io.FileReader  ;
-import java.nio.charset.Charset;
+import java.io .FileReader      ;
+import java.nio.charset.Charset ;
+
 import java.util.ArrayList ;
 import java.util.List      ;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Map       ;
+import java.util.HashMap   ;
 import java.util.Scanner   ;
 
 import metier.piece.Cavalier ;
@@ -19,7 +20,7 @@ import metier.piece.Tour     ;
 public class Metier 
 {
 	/**
-	 * HashMap qui associe la difficulté à la couleur du tableau
+	 * HashMap qui associe la difficulté à la couleur du plateau
 	 */
 	private static Map<Character, String> dicDifficuclte = new HashMap<Character, String>();
 
@@ -27,42 +28,42 @@ public class Metier
 	/**
 	 * Le niveau en cours
 	 */
-	private int               niveau        ;
+	private int               niveau;
 
 	/**
 	 * Le niveau de difficulté en cours
 	 */
-	private char              difficulte    ;
+	private char              difficulte;
 
 	/**
 	 * La liste de pièce du plateau actuel
 	 */
-	private List<Piece>       lstPiece      ;
+	private List<Piece>       lstPiece;
 
 	/**
 	 * Taille du plateau actuel
 	 */
-	private int               taillePlateau ;
+	private int               taillePlateau;
 	
 	/**
 	 * Liste de tout les etat de plateau du niveau actuel
 	 */
-	private List<List<Piece>> lstEtat       ;
+	private List<List<Piece>> lstEtat;
 
 	/**
 	 * indice de l'etat actuel
 	 */
-	private int               cptEtat       ;
+	private int               cptEtat;
+	
+
 	
 	static
 	{
-		Metier.dicDifficuclte.put('D', "plateauvert");
-		Metier.dicDifficuclte.put('I', "plateaubleu");
-		Metier.dicDifficuclte.put('A', "plateauviolet");
-		Metier.dicDifficuclte.put('E', "plateaurouge");
+		Metier.dicDifficuclte.put( 'D', "plateauvert"   );
+		Metier.dicDifficuclte.put( 'I', "plateaubleu"   );
+		Metier.dicDifficuclte.put( 'A', "plateauviolet" );
+		Metier.dicDifficuclte.put( 'E', "plateaurouge"  );
 	}
-
-
 
 
 	/**
@@ -90,7 +91,7 @@ public class Metier
 			Scanner sc = new Scanner(new FileReader("./donnees/niveaux/niveau" + this.niveau + ".txt", Charset.forName("UTF-8")));
 		
 			this.lstPiece.clear();
-			this.lstEtat.clear();
+			this.lstEtat .clear();
 			this.cptEtat = -1;
 
 			this.difficulte = sc.nextLine().charAt(0);
@@ -111,25 +112,25 @@ public class Metier
 
 						switch (positionnement[cptP].charAt(0)) 
 						{
-							case 'P' -> piece = new Pion     ( cptL, cptC);
-							case 'C' -> piece = new Cavalier ( cptL, cptC);
-							case 'T' -> piece = new Tour     ( cptL, cptC);
-							case 'Q' -> piece = new Reine    ( cptL, cptC);
-							case 'K' -> piece = new Roi      ( cptL, cptC);
-							case 'F' -> piece = new Fou      ( cptL, cptC);
+							case 'P' -> piece = new Pion     ( cptL, cptC );
+							case 'C' -> piece = new Cavalier ( cptL, cptC );
+							case 'T' -> piece = new Tour     ( cptL, cptC );
+							case 'Q' -> piece = new Reine    ( cptL, cptC );
+							case 'K' -> piece = new Roi      ( cptL, cptC );
+							case 'F' -> piece = new Fou      ( cptL, cptC );
 						}
 	
 						if(piece != null)
-							this.lstPiece.add(piece);
+							this.lstPiece.add( piece );
 					}
 					cptL++;
 				}
 			}
-			this.lstEtat.add(++this.cptEtat, this.copy(this.lstPiece));
+			this.lstEtat.add( ++this.cptEtat, this.copy( this.lstPiece ));
 			
 			this.taillePlateau = cptL;
 		}
-		catch(Exception e){e.printStackTrace();}
+		catch (Exception e ){ e.printStackTrace() ;}
 	}
 
 	/**
@@ -140,7 +141,7 @@ public class Metier
 	 */
 	public Piece getPiece(int lig, int col)
 	{
-		if(lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau)
+		if( lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau )
 			return null;
 	
 		for (Piece piece : lstPiece)
@@ -154,14 +155,14 @@ public class Metier
 	 * Retourne le niveau actuel
 	 * @return le niveau actuel
 	 */
-	public int getNiveau() {return this.niveau;}
+	public int getNiveau() { return this.niveau ;}
 
 	/**
 	 * Passe au niveau suivant
 	 */
 	public void niveauSuivant()
 	{
-		this.niveau = this.niveau < 60 ? this.niveau+1:this.niveau;
+		this.niveau = this.niveau < 60 ? this.niveau+1 : this.niveau ;
 		this.chargerNiveau();
 	}
 
@@ -170,7 +171,7 @@ public class Metier
 	 */
 	public void niveauPrecedent()
 	{
-		this.niveau = this.niveau > 1 ? this.niveau-1:this.niveau;
+		this.niveau = this.niveau >  1 ? this.niveau-1 : this.niveau ;
 		this.chargerNiveau();
 	}
 
@@ -198,17 +199,17 @@ public class Metier
 	 */
 	public void redo()
 	{
-		if(cptEtat < lstEtat.size() - 1)
+		if( cptEtat < lstEtat.size() - 1 )
 			cptEtat++;
 
-		lstPiece = this.copy(lstEtat.get(cptEtat));
+		lstPiece = this.copy(lstEtat.get( cptEtat ));
 	}
 
 	/**
 	 * Méthode qui vas retourné la taille du tableau
 	 * @return int qui représente la taille de tableaux (int x int)
 	 */
-	public int getTaillePlateau() {return this.taillePlateau;}
+	public int getTaillePlateau() { return this.taillePlateau ;}
 
 	/**
 	 * Méthode qui deplace une Piece vers des coordonnés
@@ -218,27 +219,27 @@ public class Metier
 	 */
 	public void deplacer(Piece piece, int ligDest, int colDest)
 	{
-		if(piece == null)
+		if ( piece == null )
 			return;
 
 
-		if(ligDest >= this.taillePlateau || colDest >= this.taillePlateau ||
-		   ligDest <  0             || colDest <  0               )
+		if ( ligDest >= this.taillePlateau || colDest >= this.taillePlateau ||
+		     ligDest <  0                  || colDest <  0                     )
 			return;
 
-		if(piece.peutDeplacer(ligDest, colDest))
-			piece.deplacer(ligDest, colDest);
+		if ( piece.peutDeplacer( ligDest, colDest))
+			 piece.deplacer( ligDest, colDest );
 
 		Piece autrePiece;
 
-		if((autrePiece = piece.estConfondu(lstPiece)) != null)
-			this.lstPiece.remove(autrePiece);
+		if ( (autrePiece = piece.estConfondu(lstPiece)) != null )
+			this.lstPiece.remove( autrePiece );
 
 		this.cptEtat++;
 
-		try{this.lstEtat.remove(this.cptEtat);}catch(Exception e){}
+		try { this.lstEtat.remove(this.cptEtat); } catch ( Exception e ) {}
 
-		this.lstEtat.add(this.cptEtat, this.copy(this.lstPiece));
+		this.lstEtat.add( this.cptEtat, this.copy( this.lstPiece ) );
 		
 
 		if(this.lstPiece.size() == 1)
@@ -263,14 +264,14 @@ public class Metier
 	 */
 	public String getCoulDifficulte()
 	{
-		return Metier.dicDifficuclte.get(this.difficulte);
+		return Metier.dicDifficuclte.get( this.difficulte );
 	}
 
 	/**
 	 * Methode pour obtenir la List tout les pieces du plateau
 	 * @return List de pieces
 	 */
-	public List<Piece> getLstPiece() {return this.lstPiece;}
+	public List<Piece> getLstPiece() { return this.lstPiece ;}
 
 	/**
 	 * Methode retournant le char symbole de la piece aux coordonnées donnés
@@ -280,11 +281,11 @@ public class Metier
 	 */
 	public char getSymbole(int lig, int col)
 	{
-		if(lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau)
+		if( lig * this.taillePlateau + col >= this.taillePlateau * this.taillePlateau )
 			return ' ';
 		
-		for (Piece piece : lstPiece)
-			if(piece.getLig() == lig && piece.getCol() == col)
+		for ( Piece piece : lstPiece )
+			if( piece.getLig() == lig && piece.getCol() == col )
 				return piece.getSymbole();
 
 		return ' ';
@@ -298,22 +299,19 @@ public class Metier
 	public List<Piece> copy(List<Piece> lstPiece)
 	{
 		List<Piece> lstRet = new ArrayList<Piece>();
-
-		for (Piece piece : lstPiece)
+		for ( Piece piece : lstPiece )
 		{
 			Piece tmp = null;
-			if(piece.getClass()	== Cavalier.class) tmp = new Cavalier(piece);
-			if(piece.getClass()	== Fou.class     ) tmp = new Fou     (piece);
-			if(piece.getClass()	== Pion.class    ) tmp = new Pion    (piece);
-			if(piece.getClass()	== Reine.class   ) tmp = new Reine   (piece);
-			if(piece.getClass()	== Roi.class     ) tmp = new Roi     (piece);
-			if(piece.getClass()	== Tour.class    ) tmp = new Tour    (piece);
+			if ( piece instanceof Cavalier ) tmp = new Cavalier (piece);
+			if ( piece instanceof Fou      ) tmp = new Fou      (piece);
+			if ( piece instanceof Pion     ) tmp = new Pion     (piece);
+			if ( piece instanceof Reine    ) tmp = new Reine    (piece);
+			if ( piece instanceof Roi      ) tmp = new Roi      (piece);
+			if ( piece instanceof Tour     ) tmp = new Tour     (piece);
 			
-			lstRet.add(tmp);
+			lstRet.add( tmp );
 		}
 
 		return lstRet;
 	}
-	
 }
-

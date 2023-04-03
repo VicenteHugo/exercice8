@@ -24,6 +24,6 @@ public class Frame extends FrameGrille
 		this.setTitle    ( "Exemple" );
 		this.setVisible  ( true      );
 
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./donnees/images/plateaurouge.gif"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./donnees/images/tour.gif"));
 	}
 }

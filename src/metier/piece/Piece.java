@@ -84,13 +84,15 @@ public abstract class Piece
 		int ligPas = 0;
 		int colPas = 0;
 
-		if(this.lig > ligDest) ligPas = -1;
-		if(this.lig < ligDest) ligPas = 1;
-		if(this.col > colDest) colPas = -1;
-		if(this.col < colDest) colPas = 1;
+		if (this.lig > ligDest) ligPas = -1;
+		if (this.lig < ligDest) ligPas =  1;
+		if (this.col > colDest) colPas = -1;
+		if (this.col < colDest) colPas =  1;
 
 
-		for(int cptLig = this.lig + ligPas, cptCol = this.col + colPas; !(cptCol == colDest && cptLig == ligDest); cptLig += ligPas, cptCol += colPas)
+		for (int cptLig = this.lig + ligPas, cptCol = this.col + colPas ;
+		     !(cptCol == colDest && cptLig == ligDest)                  ; 
+			 cptLig += ligPas, cptCol += colPas                           )
 		{
 			for (Piece p: lstPiece)
 			{

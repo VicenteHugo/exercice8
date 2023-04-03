@@ -8,9 +8,6 @@
 #Compile list
 compile.list
 
-#runner
-run.bat
-
 #donnees
 *.gif
 *.txt

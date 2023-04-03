@@ -32,15 +32,15 @@ public class Fou extends Piece
 	public boolean peutDeplacer(int ligDest, int colDest)
 	{
 
-		return  (Math.abs(this.getLig() - ligDest) == Math.abs(this.getCol() - colDest) &&
-		        !this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest)        ||
-			    (this.getLig() + 1 == ligDest && this.getCol() + 1 == colDest ||
-			     this.getLig() - 1 == ligDest && this.getCol() - 1 == colDest ||
-				 this.getLig() - 1 == ligDest && this.getCol() + 1 == colDest ||
-				 this.getLig() + 1 == ligDest && this.getCol() - 1 == colDest))
-				&&
-				(this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null && 
-				!this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest));
+		return  ( Math.abs(this.getLig() - ligDest) == Math.abs(this.getCol() - colDest) &&
+		         !this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest)       ||
+		          (this.getLig() + 1 == ligDest && this.getCol() + 1 == colDest ||
+		           this.getLig() - 1 == ligDest && this.getCol() - 1 == colDest ||
+		           this.getLig() - 1 == ligDest && this.getCol() + 1 == colDest ||
+		           this.getLig() + 1 == ligDest && this.getCol() - 1 == colDest    )       )
+		        &&
+		        ( this.mange(ligDest, colDest, Piece.metier.getLstPiece()) != null && 
+		         !this.autresPieces(Piece.metier.getLstPiece(), ligDest, colDest)          ) ;
 	}
 
 	public char getSymbole(){return 'F';}
