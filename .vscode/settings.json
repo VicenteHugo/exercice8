@@ -1,6 +1,14 @@
 {
 	"java.project.referencedLibraries": [
 		"lib/**/*.jar",
-		"c:\\paquetage_class\\ihmgui.jar"
+		"c:\\paquetage_class\\ihmgui.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\gs-algo.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\gs-core.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\gs-ui.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\ihmgui.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\iut.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\jansi-1.4.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\jcommon-1.0.23.jar",
+		"c:\\Users\\tom18\\IUT\\TP\\java\\paquetage_class\\jfreechart-1.0.19.jar"
 	]
 }
